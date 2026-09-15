@@ -1,0 +1,288 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Design tokens
+   Public site: the drarifortho.com palette (navy + copper accent + a light
+   surface). Admin panel: the teal `brand` / slate `ink` scales.
+   ========================================================================== */
+@theme {
+  /* ---- public site (ported from the original Dr. Arif design) ---- */
+  --color-primary: #0f1b2d;
+  --color-primary-dark: #070e1a;
+  --color-primary-light: #1e3a5f;
+  --color-accent: #c87a3a;
+  --color-accent-dark: #a8602a;
+  --color-accent-light: #e8945a;
+  --color-surface: #faf8f5;
+  --color-surface-muted: #f3efe8;
+  --color-foreground: #171717;
+  --color-muted: #787878;
+  --color-blue-light: #3b86d1;
+  --color-blue-dark: #0c2e57;
+
+  --shadow-premium: 0 25px 60px -15px rgba(15, 27, 45, 0.12);
+  --shadow-warm: 0 20px 50px -12px rgba(200, 122, 58, 0.15);
+
+  /* ---- admin panel ---- */
+  --color-brand-50: #ecfdf7;
+  --color-brand-100: #d1fae9;
+  --color-brand-200: #a7f3d6;
+  --color-brand-300: #6ee7bf;
+  --color-brand-400: #34d3a4;
+  --color-brand-500: #12b886;
+  --color-brand-600: #0d9b72;
+  --color-brand-700: #0b7c5d;
+  --color-brand-800: #0b624b;
+  --color-brand-900: #0a5140;
+  --color-brand-950: #032e25;
+
+  --color-ink-50: #f8fafc;
+  --color-ink-100: #f1f5f9;
+  --color-ink-200: #e2e8f0;
+  --color-ink-300: #cbd5e1;
+  --color-ink-400: #94a3b8;
+  --color-ink-500: #64748b;
+  --color-ink-600: #475569;
+  --color-ink-700: #334155;
+  --color-ink-800: #1e293b;
+  --color-ink-900: #0f172a;
+  --color-ink-950: #020617;
+
+  --radius-card: 1rem;
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 8px 24px -12px rgb(15 23 42 / 0.12);
+  --shadow-float: 0 12px 32px -12px rgb(15 23 42 / 0.25);
+}
+
+/* Fonts are provided by next/font as CSS variables on <html>. */
+@theme inline {
+  --font-bangla: var(--font-bangla);
+  --font-google-sans: var(--font-google-sans);
+  --font-sans: var(--font-google-sans), var(--font-bangla), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: white;
+    color: var(--color-foreground);
+    font-family: var(--font-bangla);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* The admin panel is English-only and reads better in Inter. */
+  [data-admin] {
+    font-family: var(--font-sans);
+  }
+
+  ::selection {
+    background-color: rgb(59 134 209 / 0.2);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-blue-light);
+    outline-offset: 2px;
+  }
+}
+
+/* ==========================================================================
+   Animations (from the original site)
+   ========================================================================== */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slide-right {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+.animate-scale-in {
+  animation: scale-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.animate-slide-right {
+  animation: slide-right 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+
+.card-hover {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-premium);
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-fade-in,
+  .animate-scale-in,
+  .animate-slide-right,
+  .card-hover {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   Shared component classes
+   ========================================================================== */
+@layer components {
+  .max-container {
+    @apply max-w-7xl mx-auto xl:px-20 md:px-10 px-5;
+  }
+
+  .container-page {
+    @apply max-w-7xl mx-auto px-5 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-20 md:py-32;
+  }
+
+  .primary-btn {
+    @apply inline-flex items-center gap-2.5 bg-blue-light hover:bg-blue-dark text-white px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-200 shadow-md shadow-blue-light/10 active:scale-98;
+  }
+
+  /* Rich text rendered on the public site (Quill and our editor both emit
+     plain HTML; the ql-* rules keep old posts looking right). */
+  .blog-rich-text h1,
+  .blog-rich-text h2,
+  .blog-rich-text h3,
+  .blog-rich-text h4,
+  .blog-rich-text h5,
+  .blog-rich-text h6 {
+    font-weight: bold;
+    color: var(--color-blue-dark);
+    margin-top: 1.75rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+  .blog-rich-text h1 { font-size: 2rem; }
+  .blog-rich-text h2 { font-size: 1.625rem; }
+  .blog-rich-text h3 { font-size: 1.375rem; }
+  .blog-rich-text h4 { font-size: 1.2rem; }
+  .blog-rich-text h5 { font-size: 1.05rem; }
+  .blog-rich-text h6 { font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .blog-rich-text > :first-child { margin-top: 0; }
+
+  .blog-rich-text .ql-align-center { text-align: center; }
+  .blog-rich-text .ql-align-right { text-align: right; }
+  .blog-rich-text .ql-align-justify { text-align: justify; }
+  .blog-rich-text .ql-indent-1 { padding-left: 3em; }
+  .blog-rich-text .ql-indent-2 { padding-left: 6em; }
+  .blog-rich-text .ql-indent-3 { padding-left: 9em; }
+  .blog-rich-text s { text-decoration: line-through; }
+  .blog-rich-text a { color: var(--color-blue-light); text-decoration: underline; }
+  .blog-rich-text img { max-width: 100%; height: auto; border-radius: 0.75rem; margin: 1.5rem 0; }
+  .blog-rich-text ul { list-style-type: disc; padding-left: 1.5rem; }
+  .blog-rich-text ol { list-style-type: decimal; padding-left: 1.5rem; }
+  .blog-rich-text li { margin-bottom: 0.25rem; }
+  .blog-rich-text blockquote {
+    border-left: 4px solid var(--color-blue-light);
+    padding-left: 1rem;
+    font-style: italic;
+    color: var(--color-muted);
+    margin: 1rem 0;
+  }
+  .blog-rich-text b,
+  .blog-rich-text strong {
+    font-weight: bold;
+    color: var(--color-blue-dark);
+  }
+  .blog-rich-text p { margin-bottom: 1rem; }
+
+  /* The admin rich-text editor's editable area. */
+  .rte {
+    color: var(--color-ink-700);
+    line-height: 1.8;
+  }
+  .rte > * + * { margin-top: 1em; }
+  .rte h1, .rte h2, .rte h3, .rte h4 {
+    color: var(--color-ink-900);
+    font-weight: 700;
+    line-height: 1.3;
+    margin-top: 1.4em;
+  }
+  .rte h1 { font-size: 1.875rem; }
+  .rte h2 { font-size: 1.5rem; }
+  .rte h3 { font-size: 1.25rem; }
+  .rte a { color: var(--color-blue-light); text-decoration: underline; }
+  .rte strong { color: var(--color-ink-900); font-weight: 600; }
+  .rte ul, .rte ol { padding-inline-start: 1.5rem; }
+  .rte ul { list-style: disc; }
+  .rte ol { list-style: decimal; }
+  .rte blockquote {
+    border-inline-start: 3px solid var(--color-blue-light);
+    padding-inline-start: 1rem;
+    color: var(--color-ink-600);
+    font-style: italic;
+  }
+  .rte img { border-radius: 0.75rem; max-width: 100%; height: auto; }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+}
