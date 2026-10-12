@@ -53,6 +53,8 @@ export async function generateMetadata({
     title: { default: title, template: `%s | ${siteName}` },
     description,
     icons: settings.favicon_url ? { icon: settings.favicon_url } : undefined,
+    // Google Search Console ownership (HTML tag method).
+    verification: { google: "G1upGbkiUe9wSzpzeUJvu8ni7pfoRf7ZX6PjAiUDiwg" },
     openGraph: {
       type: "website",
       siteName,
